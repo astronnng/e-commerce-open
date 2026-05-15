@@ -69,7 +69,7 @@ console.log(orders)
                 <h1 className='mb-4 text-3xl font-semibold'>Ordens</h1>
                 <div className='bg-white rounded-md bg-opacity-80 m-2 p-2'>
                 {loading ? (
-                 <div>Loading...</div>
+                 <div>Carregando...</div>
                  ): error ? (
                  <div className='alert-error'>{error}</div>
                  ):(

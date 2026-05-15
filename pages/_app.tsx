@@ -8,7 +8,7 @@ import type { NextComponentType  } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 type CustomAppProps = AppProps & {
-  Component: NextComponentType & {auth?: boolean} // add auth type
+  Component: NextComponentType & {auth?: boolean} // Adiciona tipagem para rotas protegidas.
 }
 
 const App = ({ Component, pageProps: {session, ...pageProps} }: CustomAppProps) => {
@@ -46,11 +46,11 @@ function Auth({ children }:any){
   const {status} = useSession({
     required: true,
     onUnauthenticated(){
-      router.push('/unauthorized?message=login required');
+      router.push('/unauthorized?message=Login obrigatorio');
     }
   });
   if(status === 'loading'){
-    return <div>Loading...</div>
+    return <div>Carregando...</div>
   }
   return children;
 }

@@ -6,14 +6,14 @@ import db from "@/utils/db";
 const handler = async (req:any, res:any) => {
     const session:any = await getSession({req});
     if (!session || !session.user.isAdmin) {
-         return res.status(401).send('admin signin required');
+         return res.status(401).send('login de administrador obrigatorio');
 
     }
     if(req.method === 'DELETE'){
         return deleteHandler(req, res);
 
     }else{
-        return res.status(400).send({message: 'Method not allowed'});
+        return res.status(400).send({message: 'Metodo nao permitido'});
     }
 }   
 

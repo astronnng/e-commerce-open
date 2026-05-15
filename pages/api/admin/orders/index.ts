@@ -5,7 +5,7 @@ import db from '@/utils/db';
 const handler = async (req: any, res: any) => {
   const session: any = await getSession({ req });
   if (!session || (session && !session.user.isAdmin)) {
-    return res.status(401).send('signin required');
+    return res.status(401).send('login obrigatorio');
   }
   if (req.method === 'GET') {
     await db.connect();
@@ -14,7 +14,7 @@ const handler = async (req: any, res: any) => {
 
     res.send(orders);
   } else {
-    return res.status(400).send({ message: 'Method not allowed' });
+    return res.status(400).send({ message: 'Metodo nao permitido' });
   }
 };
 

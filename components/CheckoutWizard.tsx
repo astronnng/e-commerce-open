@@ -4,7 +4,7 @@ const CheckoutWizard = ({activeStep = 0}) => {
   return (
     <div className='mb-5 flex flex-wrap'>
         {
-            ['User Login','Shipping Address', 'Payment Method', 'Place Order'].map(
+            ['Login','Endereco de entrega', 'Forma de pagamento', 'Finalizar pedido'].map(
                 (step, index)=> (
                     <div key={index}
                     className={`flex-1 border-b-2 text-center 

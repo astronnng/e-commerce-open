@@ -87,7 +87,7 @@ const AdminProductEditScreen = () => {
 
             dispatch({ type: 'UPLOAD_SUCCESS'});
             setValue(imageField, data.secure_url);
-            toast.success('File upload successfully');
+            toast.success('Arquivo enviado com sucesso');
 
         }catch(err){
             dispatch({type:'UPLOAD_FAIL', payload: getError(err)});
@@ -136,7 +136,7 @@ const AdminProductEditScreen = () => {
                 </div>
                 <div className='md:col-span-3'>
                 {loading ? (
-                 <div>Loading...</div>
+                 <div>Carregando...</div>
                  ): error ? (
                  <div className='alert-error'>{error}</div>
                  ):(
@@ -188,7 +188,7 @@ const AdminProductEditScreen = () => {
                                {errors.image && (<div className='text-red'>{errors.image.message}</div>)}
                             </div>
                             <div className='mb-4'>
-                                <label htmlFor='imageFile'>Upload image</label>
+                                <label htmlFor='imageFile'>Enviar imagem</label>
                                 <input type='file' className='w-full' id='imageFile' onChange={uploadHandler}/>
                                 {loadingUpload && <div></div>}
                             </div>
@@ -215,7 +215,7 @@ const AdminProductEditScreen = () => {
                                {errors.flavor && (<div className='text-red'>{errors.flavor.message}</div>)}
                             </div>
                             <div className='mb-4'>
-                                <label htmlFor='countInStock' >Em Stock</label>
+                                <label htmlFor='countInStock' >Em estoque</label>
                                 <input 
                                 type='text' 
                                 className='w-full' 
@@ -238,7 +238,7 @@ const AdminProductEditScreen = () => {
                             </div>
                             <div className='mb-4'>
                                 <button disabled={loadingUpdate} className='primary-button'>
-                                    {loadingUpdate ? 'Loading' : 'Update'}
+                                    {loadingUpdate ? 'Salvando...' : 'Atualizar'}
                                 </button>
 
                             </div>

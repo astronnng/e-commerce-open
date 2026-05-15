@@ -6,7 +6,7 @@ const Unauthorized = () => {
     const { message } = router.query
   return (
     <>
-      <div className='text-xl'>Access Denied</div>
+      <div className='text-xl'>Acesso negado</div>
       {message && <div className='text-red-500'>{message}</div>}
     </>
     

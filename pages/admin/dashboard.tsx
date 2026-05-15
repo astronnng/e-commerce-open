@@ -91,7 +91,7 @@ useEffect(()=>{
         labels: summary.salesData.map((x: any) => x._id),
         datasets: [
           {
-            label: 'Sales',
+            label: 'Vendas',
             backgroundColor: 'rgba(162, 222, 208, 1)',
             data: summary.salesData.map((x: any) => x.totalSales),
           },
@@ -123,7 +123,7 @@ useEffect(()=>{
             <div className='md:col-span-3'>
                 <h1 className='mb-4 text-xl'>Painel do Administrador</h1>
                  {loading ? (
-                 <div>Loading...</div>
+                 <div>Carregando...</div>
                  ): error ? (
                  <div className='alert-error'>{error}</div>
                  ):(
@@ -137,17 +137,17 @@ useEffect(()=>{
                         <div className='card m-5 p-5 bg-white rounded-md bg-opacity-80 m-2 p-2'>
                             <p className='text-3xl'>{summary.ordersCount}</p>
                             <p>Ordens</p>
-                            <Link className='text-indigo bg-white rounded-md bg-opacity-80 m-2 p-2' href='/admin/orders'>Ver Ordens</Link>
+                            <Link className='text-indigo bg-white rounded-md bg-opacity-80 m-2 p-2' href='/admin/orders'>Ver ordens</Link>
                         </div>
                         <div className='card m-5 p-5 bg-white rounded-md bg-opacity-80 m-2 p-2'>
                             <p className='text-3xl'>{summary.productsCount}</p>
                             <p>Produtos</p>
-                            <Link className='text-indigo'  href='/admin/products'>Ver Produtos</Link>
+                            <Link className='text-indigo'  href='/admin/products'>Ver produtos</Link>
                         </div>
                         <div className='card m-5 p-5 bg-white rounded-md bg-opacity-80 m-2 p-2'>
                             <p className='text-3xl'>{summary.usersCount}</p>
                             <p>Usuários</p>
-                            <Link className='text-indigo' href='/admin/users'>Ver Usuários</Link>
+                            <Link className='text-indigo' href='/admin/users'>Ver usuarios</Link>
                         </div>
                         
                     </div>

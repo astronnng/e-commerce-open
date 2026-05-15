@@ -5,14 +5,14 @@ import { getToken } from "next-auth/jwt";
 const handler = async (req, res) => {
     const token = await getToken({ req });
     if (!token) {
-        return res.status(404).send( 'signin required')
+        return res.status(404).send('login obrigatorio')
     }
     
 
     const   user  = token;
     if (!user || !user._id) {
 
-        return res.status(404).send( 'signin required')
+        return res.status(404).send('login obrigatorio')
 
     }
     await db.connect();

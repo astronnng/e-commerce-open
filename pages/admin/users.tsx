@@ -68,7 +68,7 @@ const AdminUserScreen = () => {
            dispatch({type: 'DELETE_REQUEST'});
            await axios.delete(`/api/admin/users/${userId}`)
            dispatch({type: 'DELETE_SUCCESS'});
-           toast.success('User deleted successfully')
+           toast.success('Usuario removido com sucesso')
 
         }catch(err){
            dispatch({type: 'DELETE_FAIL'})
@@ -103,9 +103,9 @@ const AdminUserScreen = () => {
             </div>
             <div className='overflow-x-auto md:col-span-3'>
                 <h1 className='mb-4 text-3xl font-semibold'>Usuários</h1>
-                {loadingDelete && <div>Deleting...</div>}
+                {loadingDelete && <div>Excluindo...</div>}
                 {loading ? (
-                 <div>Loading...</div>
+                 <div>Carregando...</div>
                  ): error ? (
                  <div className='alert-error'>{error}</div>
                  ):(
@@ -127,7 +127,7 @@ const AdminUserScreen = () => {
                                     <td className='p-5'>{user._id.substring(20, 24)}</td>
                                     <td className='p-5'>{user.name}</td>
                                     <td className='p-5'>{user.email}</td>
-                                    <td className='p-5'>{user.isAdmin ? 'YES' : 'NO'}</td>
+                                    <td className='p-5'>{user.isAdmin ? 'SIM' : 'NAO'}</td>
                                     <td className='p-5'>
                                         <Link type='button' className='edit-button' href={`/admin/user/${user._id}`} passHref>
                                             Editar

@@ -79,14 +79,14 @@ const AdminProductsScreen = () => {
     },[successDelete])
 
     const deleteHandler = async (productId:any) => {
-             if(!window.confirm('Are you sure?')){
+             if(!window.confirm('Tem certeza que deseja excluir este produto?')){
                 return;
              } 
              try{
                 dispatch({type: 'DELETE_REQUEST'});
                 await axios.delete(`/api/admin/products/${productId}`)
                 dispatch({type: 'DELETE_SUCCESS'});
-                toast.success('Deleted successfully')
+                toast.success('Produto removido com sucesso')
 
              }catch(err){
                 dispatch({type: 'DELETE_FAIL'})
@@ -120,17 +120,17 @@ const AdminProductsScreen = () => {
             <div className='overflow-x-auto md:col-span-3'>
                 <div className='flex justify-between'>
                    <h1 className='mb-4 text-3xl font-semibold'>Produtos</h1>
-                   {loadingDelete && <div>Deleting item...</div>}
+                   {loadingDelete && <div>Excluindo item...</div>}
                    <button 
                         disabled={loadingCreate} 
                         onClick={createHandler} 
                         className='primary-button'
-                        >{loadingCreate ? 'Loading': 'Criar Produto'}
+                        >{loadingCreate ? 'Criando...': 'Criar Produto'}
                      </button>
                 </div>
                 
                 {loading ? (
-                 <div>Loading...</div>
+                 <div>Carregando...</div>
                  ): error ? (
                  <div className='alert-error'>{error}</div>
                  ):(
@@ -162,7 +162,7 @@ const AdminProductsScreen = () => {
                                     </div>
                                     <div>
                                     <button onClick={()=> deleteHandler(product._id)} className='delete-button'>
-                                        Delete
+                                        Excluir
                                     </button>
                                     </div>
                                 </td>

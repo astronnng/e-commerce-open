@@ -7,7 +7,7 @@ import db from "@/utils/db";
 const handler = async (req:any, res:any) => {
     const session:any = await getSession({ req});
     if (!session || (session && !session.user.isAdmin)){
-        return res.status(401).send('signin required');
+        return res.status(401).send('login obrigatorio');
     }
 
     // eslint-disable-next-line no-unused-vars
@@ -19,7 +19,7 @@ const handler = async (req:any, res:any) => {
     }else if (req.method === 'DELETE') {
         return deleteHandler(req, res);
     }else{
-        return res.status(400).send({message:'Method not allowed'})
+        return res.status(400).send({message:'Metodo nao permitido'})
     }
 };
 const getHandler= async (req:any, res:any) =>{
@@ -43,10 +43,10 @@ const putHandler= async (req:any,res:any) => {
         product.description = req.body.description || product.description;
         await product.save(); 
         await db.disconnect();
-        res.send({message: 'Product updated successfully'})
+        res.send({message: 'Produto atualizado com sucesso'})
     }else{
         await db.disconnect();
-        res.status(404).send({message:'Product not found'})
+        res.status(404).send({message:'Produto nao encontrado'})
     }
    
 };
@@ -56,10 +56,10 @@ const deleteHandler = async (req:any, res:any) => {
     if (product) {
         await product.deleteOne();
         await db.disconnect();
-        res.send({message: 'Product deleted successfully'})
+        res.send({message: 'Produto removido com sucesso'})
     }else{
         await db.disconnect();
-        res.status(404).send({ message: 'Product not found'})
+        res.status(404).send({ message: 'Produto nao encontrado'})
     }
 }
 export default handler

@@ -9,7 +9,7 @@ import { getSession } from 'next-auth/react';
 import handler from '../../pages/api/keys/paypal';
 
 describe('GET /api/keys/paypal', () => {
-  it('returns 401 when the user is not authenticated', async () => {
+  it('retorna 401 quando o usuario nao esta autenticado', async () => {
     (getSession as jest.Mock).mockResolvedValue(null);
 
     const { req, res } = createMocks({
@@ -19,10 +19,10 @@ describe('GET /api/keys/paypal', () => {
     await handler(req, res);
 
     expect(res._getStatusCode()).toBe(401);
-    expect(res._getData()).toBe('signin required');
+    expect(res._getData()).toBe('login obrigatorio');
   });
 
-  it('returns the configured paypal client id for authenticated users', async () => {
+  it('retorna o client id do paypal para usuarios autenticados', async () => {
     (getSession as jest.Mock).mockResolvedValue({ user: { name: 'Admin' } });
     process.env.PAYPAL_CLIENT_ID = 'paypal-client-id-test';
 

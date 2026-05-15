@@ -35,7 +35,7 @@ const ProfileScreen = () => {
         password,
       });
 
-      // Re-authenticate only when password was changed.
+      // Reautentica apenas quando a senha foi alterada.
       if (password) {
         const result = await signIn('credentials', {
           redirect: false,

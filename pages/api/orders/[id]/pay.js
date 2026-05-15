@@ -6,14 +6,14 @@ import { getSession } from 'next-auth/react';
 const handler = async (req, res) => {
     const session = await getSession({ req });
     if (!session) {
-        return res.status(401).send('Error: Signin required')
+        return res.status(401).send('Erro: login obrigatorio')
     }
 
     await db.connect()
     const order = await Order.findById(req.query.id)
     if(order) {
         if (order.isPaid) {
-            return res.status(400).send({ message: "Error: order id already paid" })
+            return res.status(400).send({ message: "Erro: pedido ja foi pago" })
         }
         order.isPaid = true;
         order.paidAt = Date.now();
@@ -24,10 +24,10 @@ const handler = async (req, res) => {
         };
         const paidOrder = await  order.save();
         await db.disconnect();
-        res.send({message: 'order paid successfully', order: paidOrder});
+        res.send({message: 'Pedido pago com sucesso', order: paidOrder});
     }else{
         await db.disconnect();
-        res.status(404).send({message:'Error: order not found'})
+        res.status(404).send({message:'Erro: pedido nao encontrado'})
     }
 }
 

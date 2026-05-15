@@ -2,13 +2,13 @@
 
 Aplicacao de e-commerce full stack desenvolvida com Next.js, TypeScript, MongoDB e NextAuth. O projeto foi organizado para servir como vitrine de portfólio e como base para evoluir uma loja virtual com autenticacao, carrinho, checkout e painel administrativo.
 
-## Preview
+## Visao geral
 
-![Home preview](./public/images/shirts1.jpg)
+![Imagem da home](./public/images/shirts1.jpg)
 
 Deploy de referencia informado no projeto: `https://outfit-store-alpha.vercel.app/`
 
-## Stack
+## Tecnologias
 
 - Next.js
 - React
@@ -89,7 +89,7 @@ Com a aplicacao configurada e conectada ao MongoDB, execute a rota de seed uma v
 GET /api/seed
 ```
 
-## Scripts
+## Comandos
 
 - `npm run dev`: ambiente de desenvolvimento
 - `npm run build`: build de producao

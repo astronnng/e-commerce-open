@@ -7,7 +7,7 @@ const DEFAULT_PRODUCT_IMAGE = '/images/shirts1.jpg';
 const handler = async (req:any, res:any) => {
     const session:any = await getSession({req});
     if (!session || !session.user.isAdmin){
-        return res.status(401).send('admin signin required');
+        return res.status(401).send('login de administrador obrigatorio');
 
     }
    // const { user } = session;
@@ -17,7 +17,7 @@ const handler = async (req:any, res:any) => {
         return postHandler(req, res);
     }
     else {
-        return res.status(400).send({message: 'Method not allowed'})
+        return res.status(400).send({message: 'Metodo nao permitido'})
     }
 };
 const postHandler = async (req:any, res:any) => {
@@ -36,7 +36,7 @@ const postHandler = async (req:any, res:any) => {
     });
     const product = await newProduct.save();
     await db.disconnect()
-    res.send({message: 'Product created successfully', product})
+    res.send({message: 'Produto criado com sucesso', product})
 }
 const getHandler = async (req:any, res:any) => {
     await db.connect();

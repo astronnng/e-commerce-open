@@ -15,7 +15,7 @@ const handler = async(req:any,res:any) => {
     password.trim().length < 6
  ){
     res.status(422).json({
-        message: 'Validation error'
+        message: 'Erro de validacao'
     });
     return;
  }
@@ -23,7 +23,7 @@ const handler = async(req:any,res:any) => {
  await db.connect();
  const  existingUser = await User.findOne({email: email})
  if (existingUser) {
-    res.status(422).json({message: 'User already exists'});
+    res.status(422).json({message: 'Usuario ja existe'});
     await db.disconnect();
     return;
  }
@@ -36,7 +36,7 @@ const handler = async(req:any,res:any) => {
  const user = await newUser.save();
  await db.disconnect();
  res.status(201).send({
-   message: "Created user",
+   message: "Usuario criado",
    _id: user._id,
    name: user.username,
    email: user.email,

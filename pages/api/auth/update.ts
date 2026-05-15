@@ -18,12 +18,12 @@ async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== "PUT") {
-    return res.status(400).send({ message: `${req.method} not supported` });
+    return res.status(400).send({ message: `Metodo ${req.method} nao suportado` });
   }
 
   const session = await getSession({ req });
   if (!session) {
-    return res.status(401).send({ message: "signin required" });
+    return res.status(401).send({ message: "login obrigatorio" });
   }
   const { user }:any = session;
   const { name, email, password } = req.body;
@@ -35,7 +35,7 @@ async function handler(
     (password && password.trim().length < 3)
   ) {
     res.status(422).json({
-      message: "Validation error",
+      message: "Erro de validacao",
     });
     return;
   }
@@ -50,7 +50,7 @@ async function handler(
   await toUpdateUser.save();
   await db.disconnect();
   res.send({
-    message: 'User updated successfully'
+    message: 'Usuario atualizado com sucesso'
   })
 }
 
