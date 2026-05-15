@@ -1,19 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { getSafeProductImageSrc } from '@/utils/image';
 
 const ProductItem = ({ product, addToCartHandler }: any) => {
   const price = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   }).format(product.price);
+  const imageSrc = getSafeProductImageSrc(product.image);
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Link href={`/product/${product.slug}`} className="block">
         <div className="relative h-72 overflow-hidden bg-slate-100">
           <Image
-            src={product.image}
+            src={imageSrc}
             alt={product.name}
             fill
             sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"

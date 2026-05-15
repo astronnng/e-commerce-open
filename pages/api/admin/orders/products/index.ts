@@ -2,6 +2,8 @@ import { getSession } from "next-auth/react";
 import Product from "@/models/Product";
 import db from "@/utils/db";
 
+const DEFAULT_PRODUCT_IMAGE = '/images/shirts1.jpg';
+
 const handler = async (req:any, res:any) => {
     const session:any = await getSession({req});
     if (!session || !session.user.isAdmin){
@@ -21,14 +23,14 @@ const handler = async (req:any, res:any) => {
 const postHandler = async (req:any, res:any) => {
     await db.connect();
     const newProduct = new Product({
-        name:'Insira o o nome do produto',
-        slug: 'insira-slug-sem-espaço-minusculas-sem-acentos' + Math.random(),
-        image: 'Insira imagem com H:850px X W:700px',
+        name:'Novo produto',
+        slug: 'novo-produto-' + Math.round(Math.random() * 1000000),
+        image: DEFAULT_PRODUCT_IMAGE,
         price: 0,
-        category: 'insira a categoria com letras minusculas e sem espaços',
-        flavor: 'insira o sabor do produto',
+        category: 'shirts',
+        flavor: 'nao informado',
         countInStock: 0,
-        description: 'Insira a descrição do produto',
+        description: 'Atualize os dados deste produto antes de publicar.',
         rating: 0,
         numReviews: 0,
     });

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import { toast } from 'react-toastify';
+import { getSafeProductImageSrc } from '@/utils/image';
 
 const ProductScreen = (props: any) => {
   const { product } = props;
@@ -38,6 +39,7 @@ const ProductScreen = (props: any) => {
     style: 'currency',
     currency: 'BRL',
   }).format(product.price);
+  const imageSrc = getSafeProductImageSrc(product.image);
 
   return (
     <section className="pb-10">
@@ -55,7 +57,7 @@ const ProductScreen = (props: any) => {
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
             <div className="relative bg-slate-100 dark:bg-slate-800">
               <Image
-                src={product.image}
+                src={imageSrc}
                 alt={product.name}
                 width={900}
                 height={900}
