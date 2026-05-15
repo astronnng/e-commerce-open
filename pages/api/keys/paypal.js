@@ -7,7 +7,7 @@ const handler = async (req, res) => {
         return res.status(401).send('signin required')
     }
 
-    res.send(process.env.PAY_PAL_CLIENT_ID || 'sb')
+    res.send(process.env.PAYPAL_CLIENT_ID || 'sb')
 }
 
 export default handler

@@ -1,166 +1,108 @@
-<div align="center">
+# Outfit Store
 
-## 🚀 Next.js E-commerce Model
+Aplicacao de e-commerce full stack desenvolvida com Next.js, TypeScript, MongoDB e NextAuth. O projeto foi organizado para servir como vitrine de portfólio e como base para evoluir uma loja virtual com autenticacao, carrinho, checkout e painel administrativo.
 
-<p>
-  <img alt="TypeScript" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" />
-  <img alt="Next.js" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" />
-  <img alt="React" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" />
-  <img alt="Node.js" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-plain.svg" />
-  <img alt="MongoDB" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain.svg" />
-  <img alt="Cloudinary" height="50" src="https://res.cloudinary.com/diypdepuw/image/upload/v1699044264/cloudinary_ckujxh.png" />
-  <img alt="TailwindCSS" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" />
-  <img alt="Jest" height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" />
-</p>
+## Preview
 
-<p>
-  A modern, scalable and production-ready e-commerce template built with Next.js.
-</p>
+![Home preview](./public/images/shirts1.jpg)
 
-🔗 **Live Demo:** https://outfit-store-alpha.vercel.app/
+Deploy de referencia informado no projeto: `https://outfit-store-alpha.vercel.app/`
 
-</div>
+## Stack
 
+- Next.js
+- React
+- TypeScript
+- MongoDB + Mongoose
+- NextAuth
+- Tailwind CSS
+- PayPal
+- Cloudinary
+- Jest
 
+## Funcionalidades
 
+- Catalogo com listagem, detalhe de produto e estoque
+- Carrinho persistido em cookie
+- Login e cadastro com NextAuth
+- Checkout com endereco, pagamento e criacao de pedido
+- Historico de pedidos do usuario
+- Painel admin com produtos, usuarios, pedidos e resumo de vendas
+- Upload de imagem com Cloudinary
 
-## Overview
+## Como rodar
 
-The Next.js E-commerce Model with is a fully functional e-commerce application model built with Next.js, Formik, and several other libraries and technologies. It provides developers with a solid foundation to kickstart the development of their e-commerce projects.
+1. Instale as dependencias:
 
-## Features
-
-##  Overview
-
-This project is a fully functional **E-commerce application model** built with modern technologies like **Next.js, TypeScript, MongoDB and NextAuth**.
-
-It provides a solid foundation for developers who want to quickly build scalable and production-ready online stores.
-
----
-
-##  Features
-
-###  Product Catalog
-- Browse products with detailed pages
-- View price, description and images
-- Clean and responsive UI
-
-###  Authentication
-- Secure authentication with **NextAuth**
-- User login & registration
-- Protected routes (cart & checkout)
-
-###  Cart Management
-- Add / remove products
-- Update quantities
-- Persistent cart using cookies
-
-### Checkout Flow
-- Complete checkout experience
-- Form validation with **Formik + Yup**
-- Shipping & payment steps
-
-###  Notifications
-- Real-time feedback using **Toastify**
-- Success and error alerts
-
-###  UI/UX Enhancements
-- Icons with **React Icons**
-- Styled with **TailwindCSS**
-
-###  Backend & API
-- MongoDB with **Mongoose**
-- API communication with **Axios**
-
----
-
-
-## Usage
-
-1. **Development Environment Setup:**
-   - Clone the repository and install dependencies using npm or yarn.
-   - Configure environment variables for Next-auth, MongoDB connection, and any other required services.
-
-2. **Customization and Extension:**
-   - Customize the UI components, styles, and functionality to match the specific requirements of your e-commerce project.
-   - Extend the model by adding features like product reviews, wishlists, or promotional banners.
-
-3. **Testing and Deployment:**
-   - Test the application thoroughly to ensure functionality and performance.
-   - Deploy the application to your preferred hosting platform, configuring deployment settings as necessary.
-
-
-
-</div>
-
-
-
-## Services Used
-| Frontend       | Backend        | Tools & Services |
-|----------------|---------------|------------------|
-| Next.js        | Node.js       | Vercel           |
-| React          | MongoDB       | GitHub           |
-| TypeScript     | Mongoose      | Cloudinary       |
-| TailwindCSS    | NextAuth      | PayPal           |
-| Formik + Yup   | API Routes    |                  |
-
-  
-* To install the dependencies.
 ```bash
-  $ npm install
-  ```
-  
-* To run the project.
-```bash
-  $ npm run dev
-  ```
-
-* To seed on data base
-```
-import Product from "@/models/Product";
-import User from "@/models/User";
-import data from "@/utils/data";
-import db from "../../utils/db"
-
-const handler = async (req:any, res:any) => {
-  await db.connect();
-  await User.deleteMany();
-  await User.insertMany(data.users);
-  await Product.deleteMany();
-  await Product.insertMany(data.products);
-  await db.disconnect();
-  res.send({message: 'seeded successfully'})
-
-};
-export default handler;
+npm install
 ```
 
+2. Crie seu arquivo de ambiente a partir do exemplo:
 
+```bash
+cp .env.example .env
+```
 
+No Windows PowerShell, voce pode usar:
 
+```powershell
+Copy-Item .env.example .env
+```
 
+3. Preencha as variaveis do `.env` com credenciais locais ou de teste.
 
+4. Rode o projeto:
 
-## Conclusion
+```bash
+npm run dev
+```
 
-The Next.js E-commerce Model with Formik offers a comprehensive and scalable solution for building e-commerce applications. With its robust authentication, cart management, checkout process, and integration with various libraries and technologies, it provides developers with a solid foundation to create feature-rich and user-friendly online stores.
+5. Acesse `http://localhost:3000`.
 
+## Variaveis de ambiente
 
-## Links
-  - Deploy on Vercel: Soon 
-  - Repository: https://github.com/jvmhonorato/outfit-store
-  - In case of sensitive bugs like security vulnerabilities, please contact
-    honorato.ofc@gmail.com directly instead of using issue tracker. We value your effort
-    to improve the security and privacy of this project!
+O projeto usa estas variaveis:
 
-  ## Versioning
+- `MONGODB_URI`
+- `NEXTAUTH_URL`
+- `NEXTAUTH_SECRET`
+- `PAYPAL_CLIENT_ID`
+- `CLOUDINARY_SECRET`
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`
+- `NEXT_PUBLIC_CLOUDINARY_API_KEY`
 
-  2.0.0.0
+Veja o arquivo [`.env.example`](./.env.example) para o formato esperado.
 
+## Dados de demo
 
-  ## Authors
+Ao popular o banco com a rota de seed, o projeto cria estes usuarios de teste:
 
-  * **@jvmhonorato** 
+- Admin: `admin@outfitstore.com` / `123456`
+- Cliente: `victor@example.com` / `123456`
 
-  Please follow github and join us!
-  Thanks to visiting me and good coding!
+## Popular o banco
+
+Com a aplicacao configurada e conectada ao MongoDB, execute a rota de seed uma vez para inserir os dados iniciais:
+
+```text
+GET /api/seed
+```
+
+## Scripts
+
+- `npm run dev`: ambiente de desenvolvimento
+- `npm run build`: build de producao
+- `npm run start`: inicia a build
+- `npm run lint`: verifica o codigo
+- `npm run test`: executa os testes
+
+## Observacoes para portfólio
+
+- O repositório foi preparado para nao versionar segredos locais.
+- As credenciais reais devem ser regeneradas se já tiverem sido expostas anteriormente.
+- O deploy pode exigir configuracao adicional de MongoDB, PayPal e Cloudinary.
+
+## Licenca
+
+Este projeto esta sob a licenca MIT. Veja [LICENSE](./LICENSE).

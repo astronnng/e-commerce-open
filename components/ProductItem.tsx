@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,11 +11,13 @@ const ProductItem = ({ product, addToCartHandler }: any) => {
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative overflow-hidden bg-slate-100">
-          <img
+        <div className="relative h-72 overflow-hidden bg-slate-100">
+          <Image
             src={product.image}
             alt={product.name}
-            className="h-72 w-full object-cover transition duration-500 group-hover:scale-105"
+            fill
+            sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover transition duration-500 group-hover:scale-105"
           />
           <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-800">
             {product.category}
