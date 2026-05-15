@@ -21,26 +21,26 @@ const handler = async(req:any,res:any) => {
  }
 
  await db.connect();
- const  existingUser = await User.findOne({email: email})
- if (existingUser) {
+ const usuarioExistente = await User.findOne({email: email})
+ if (usuarioExistente) {
     res.status(422).json({message: 'Usuario ja existe'});
     await db.disconnect();
     return;
  }
- const newUser = new User({
+ const novoUsuario = new User({
     name,
     email,
     password: bcrypt.hashSync(password),
     isAdmin: false
  })
- const user = await newUser.save();
+ const usuario = await novoUsuario.save();
  await db.disconnect();
  res.status(201).send({
    message: "Usuario criado",
-   _id: user._id,
-   name: user.username,
-   email: user.email,
-   isAdmin: user.isAdmin,
+   _id: usuario._id,
+   name: usuario.username,
+   email: usuario.email,
+   isAdmin: usuario.isAdmin,
 
  });
 

@@ -14,15 +14,15 @@ import { FaCartArrowDown } from 'react-icons/fa';
 
 const Layout = ({ title, children }: any) => {
   const { status, data: session }: any = useSession();
-  const { state, dispatch } = useContext(StoreContext);
-  const { cart } = state;
-  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const { state: estado, dispatch } = useContext(StoreContext);
+  const { cart } = estado;
+  const [quantidadeItensCarrinho, setQuantidadeItensCarrinho] = useState(0);
 
   useEffect(() => {
-    setCartItemsCount(cart.cartItems.reduce((a: any, c: any) => a + c.quantity, 0));
+    setQuantidadeItensCarrinho(cart.cartItems.reduce((acumulador: any, item: any) => acumulador + item.quantity, 0));
   }, [cart.cartItems]);
 
-  const logoutClickHandler = () => {
+  const sairHandler = () => {
     Cookies.remove('cart');
     dispatch({ type: 'CART_RESET' });
     signOut({ callbackUrl: '/login' });
@@ -32,7 +32,7 @@ const Layout = ({ title, children }: any) => {
     <>
       <Head>
         <title>{title ? `${title} - Outfit Clothes` : 'Outfit Clothes'}</title>
-        <meta name="description" content="store of clothes" />
+        <meta name="description" content="loja virtual de roupas" />
         <link rel="icon" href="/ecommerce2.ico" />
       </Head>
       <ToastContainer position="bottom-center" limit={1} />
@@ -60,7 +60,7 @@ const Layout = ({ title, children }: any) => {
                 <FaCartArrowDown className="text-lg" />
                 {cart.cartItems.length > 0 && (
                   <span className="absolute -right-1 -top-1 rounded-full bg-amber-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
-                    {cartItemsCount}
+                    {quantidadeItensCarrinho}
                   </span>
                 )}
               </Link>
@@ -89,7 +89,7 @@ const Layout = ({ title, children }: any) => {
                       </Menu.Item>
                     )}
                     <Menu.Item>
-                      <Link className="dropdown-link" href="/#" onClick={logoutClickHandler}>
+                      <Link className="dropdown-link" href="/#" onClick={sairHandler}>
                         Sair
                       </Link>
                     </Menu.Item>

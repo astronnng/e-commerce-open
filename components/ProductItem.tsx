@@ -4,18 +4,18 @@ import React from 'react';
 import { getSafeProductImageSrc } from '@/utils/image';
 
 const ProductItem = ({ product, addToCartHandler }: any) => {
-  const price = new Intl.NumberFormat('pt-BR', {
+  const precoFormatado = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   }).format(product.price);
-  const imageSrc = getSafeProductImageSrc(product.image);
+  const imagemSegura = getSafeProductImageSrc(product.image);
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       <Link href={`/product/${product.slug}`} className="block">
         <div className="relative h-72 overflow-hidden bg-slate-100">
           <Image
-            src={imageSrc}
+            src={imagemSegura}
             alt={product.name}
             fill
             sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
@@ -39,7 +39,7 @@ const ProductItem = ({ product, addToCartHandler }: any) => {
         <div className="flex items-end justify-between">
           <div>
             <p className="text-xs text-slate-500">Preco</p>
-            <p className="text-2xl font-bold text-slate-900">{price}</p>
+            <p className="text-2xl font-bold text-slate-900">{precoFormatado}</p>
           </div>
           <p className="text-sm font-medium text-amber-600">{product.rating} ★</p>
         </div>

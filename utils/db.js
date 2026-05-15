@@ -1,43 +1,43 @@
 import mongoose from "mongoose";
 
-const connection = {}
+const conexao = {}
 
 async function connect() {
-    if(connection.isConnected) {
+    if(conexao.isConnected) {
         console.log('conexao ja estabelecida')
         return;
     }
     if (mongoose.connections.length > 0) {
-        connection.isConnected = mongoose.connections[0].readyState;
-        if(connection.isConnected === 1){
+        conexao.isConnected = mongoose.connections[0].readyState;
+        if(conexao.isConnected === 1){
             console.log('usando conexao existente')
             return;
         }
         await mongoose.disconnect();
     }
-   const db = await mongoose.connect(process.env.MONGODB_URI)
+   const conexaoBanco = await mongoose.connect(process.env.MONGODB_URI)
    console.log('nova conexao criada')
-   connection.isConnected = db.connections[0].readyState;
+   conexao.isConnected = conexaoBanco.connections[0].readyState;
 
 }
 async function disconnect() {
-    if (!connection.isConnected) {
+    if (!conexao.isConnected) {
         return;
     }
 
     if(process.env.NODE_ENV === 'production') {
         await mongoose.disconnect();
-        connection.isConnected = false;
+        conexao.isConnected = false;
     } else {
         console.log('conexao mantida em desenvolvimento')
   }
 }
 // Converte um documento do Mongo em um objeto serializavel.
-function convertDocToObj(doc) {
-    doc._id = doc._id.toString();
-    doc.createdAt = doc.createdAt.toString();
-    doc.updatedAt = doc.updatedAt.toString();
-    return doc;
+function convertDocToObj(documento) {
+    documento._id = documento._id.toString();
+    documento.createdAt = documento.createdAt.toString();
+    documento.updatedAt = documento.updatedAt.toString();
+    return documento;
 }
 
 const db =  { connect,  disconnect, convertDocToObj };

@@ -3,25 +3,25 @@ import db from "@/utils/db";
 import { getToken } from "next-auth/jwt";
 
 const handler = async (req, res) => {
-    const token = await getToken({ req });
-    if (!token) {
+    const tokenSessao = await getToken({ req });
+    if (!tokenSessao) {
         return res.status(404).send('login obrigatorio')
     }
     
 
-    const   user  = token;
-    if (!user || !user._id) {
+    const usuarioSessao = tokenSessao;
+    if (!usuarioSessao || !usuarioSessao._id) {
 
         return res.status(404).send('login obrigatorio')
 
     }
     await db.connect();
-    const newOrder = new Order({
+    const novoPedido = new Order({
         ...req.body,
-        user: user._id,
+        user: usuarioSessao._id,
     });
-    const order = await newOrder.save();
-    res.status(201).send(order);
+    const pedido = await novoPedido.save();
+    res.status(201).send(pedido);
 }
 
 export default  handler;

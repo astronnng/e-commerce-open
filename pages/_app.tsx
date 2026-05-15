@@ -16,13 +16,13 @@ const App = ({ Component, pageProps: {session, ...pageProps} }: CustomAppProps) 
     <ThemeProvider attribute="class" defaultTheme="light">
   <SessionProvider session={session}>
     <StoreProvider>
-      <PayPalScriptProvider options={SCRIPT_PROVIDER_OPTIONS} deferLoading={true}>
+      <PayPalScriptProvider options={OPCOES_PROVIDER_PAYPAL} deferLoading={true}>
       {Component.auth ? (
-        <Auth>
+        <Autenticacao>
           <Layout>
           <Component {...pageProps} />
           </Layout>
-        </Auth>
+        </Autenticacao>
       ):(
       
       
@@ -36,12 +36,12 @@ const App = ({ Component, pageProps: {session, ...pageProps} }: CustomAppProps) 
    </ThemeProvider>
   )
 }
-const SCRIPT_PROVIDER_OPTIONS = {
+const OPCOES_PROVIDER_PAYPAL = {
 	"client-id": "test",
 };
 
 
-function Auth({ children }:any){
+function Autenticacao({ children }:any){
   const router = useRouter();
   const {status} = useSession({
     required: true,

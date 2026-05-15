@@ -1,13 +1,13 @@
-const DEFAULT_PRODUCT_IMAGE = '/images/shirts1.jpg';
+const IMAGEM_PADRAO_PRODUTO = '/images/shirts1.jpg';
 
-export function isValidProductImageSrc(value?: string | null): value is string {
-  if (!value || typeof value !== 'string') {
+export function isValidProductImageSrc(valor?: string | null): valor is string {
+  if (!valor || typeof valor !== 'string') {
     return false;
   }
 
-  return value.startsWith('/') || value.startsWith('http://') || value.startsWith('https://');
+  return valor.startsWith('/') || valor.startsWith('http://') || valor.startsWith('https://');
 }
 
-export function getSafeProductImageSrc(value?: string | null): string {
-  return isValidProductImageSrc(value) ? value : DEFAULT_PRODUCT_IMAGE;
+export function getSafeProductImageSrc(valor?: string | null): string {
+  return isValidProductImageSrc(valor) ? valor : IMAGEM_PADRAO_PRODUTO;
 }

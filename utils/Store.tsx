@@ -4,42 +4,42 @@ import * as Cookies from 'js-cookie'
 
 
 
-const initialState = {
+const estadoInicial = {
     cart: Cookies.get('cart') ? JSON.parse(Cookies.get('cart') || '{}'):{ cartItems: [], shippingAddress: {}}
 
 };
 
  const StoreContext = createContext<any>({
-    state: initialState,
+    state: estadoInicial,
     dispatch: () =>  null,
  });
 
 
 
-function reducer(state:any, action:any){
-    switch (action.type){ 
+function redutor(estado:any, acao:any){
+    switch (acao.type){ 
         case 'CART_ADD_ITEM':{
-            const newItem = action.payload;
-            const existItem = state.cart.cartItems.find(
-                (item:any) => item.slug === newItem.slug
+            const novoItem = acao.payload;
+            const itemExistente = estado.cart.cartItems.find(
+                (item:any) => item.slug === novoItem.slug
             )
-            const cartItems = existItem? state.cart.cartItems.map((item:any)=>
-            item.name === existItem.name ? newItem : item
+            const itensCarrinho = itemExistente ? estado.cart.cartItems.map((item:any)=>
+            item.name === itemExistente.name ? novoItem : item
             )
-            : [...state.cart.cartItems, newItem];
-            Cookies.set('cart',JSON.stringify({...state.cart, cartItems }))
-            return {...state, cart: {...state.cart, cartItems }}
+            : [...estado.cart.cartItems, novoItem];
+            Cookies.set('cart',JSON.stringify({...estado.cart, cartItems: itensCarrinho }))
+            return {...estado, cart: {...estado.cart, cartItems: itensCarrinho }}
         }
         case 'CART_REMOVE_ITEM':{
-           const cartItems = state.cart.cartItems.filter(
-            (item:any) => item.slug !== action.payload.slug
+           const itensCarrinho = estado.cart.cartItems.filter(
+            (item:any) => item.slug !== acao.payload.slug
            ); 
-           Cookies.set('cart',JSON.stringify({...state.cart, cartItems }))
-           return {...state, cart: {...state.cart, cartItems }}
+           Cookies.set('cart',JSON.stringify({...estado.cart, cartItems: itensCarrinho }))
+           return {...estado, cart: {...estado.cart, cartItems: itensCarrinho }}
         }
         case 'CART_RESET':
             return{
-                ...state,
+                ...estado,
                 cart: {
                     cartItems: [],
                     shippingAddress: { location: {}},
@@ -48,40 +48,40 @@ function reducer(state:any, action:any){
             };
             case 'CART_CLEAR_ITEMS':
                 return {
-                    ...state,
+                    ...estado,
                      cart: {
-                        ...state.cart,
+                        ...estado.cart,
                          cartItems: []
                         }
             };
 
             case 'SAVE_SHIPPING_ADDRESS':
                 return{
-                    ...state,
+                    ...estado,
                     cart: {
-                        ...state.cart,
+                        ...estado.cart,
                         shippingAddress: {
-                            ...state.cart.shippingAddress,
-                            ...action.payload,
+                            ...estado.cart.shippingAddress,
+                            ...acao.payload,
                         },
                     }
                 }
                 case 'SAVE_PAYMENT_METHOD':
                 return{
-                    ...state,
+                    ...estado,
                     cart: {
-                        ...state.cart,
-                       paymentMethod: action.payload,
+                        ...estado.cart,
+                       paymentMethod: acao.payload,
                     }
                 }
             default: 
-            return state;
+            return estado;
      }
     }
 
    function StoreProvider({children}:any){
-    const [state, dispatch] = useReducer(reducer, initialState)
-    const value =  {state, dispatch};
-    return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
+    const [estado, dispatch] = useReducer(redutor, estadoInicial)
+    const valor =  {state: estado, dispatch};
+    return <StoreContext.Provider value={valor}>{children}</StoreContext.Provider>
 }
 export { StoreContext, StoreProvider}

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-type FormValues = {
+type ValoresFormulario = {
     fullName: string;
     address: string;
     city: string;
@@ -15,11 +15,11 @@ type FormValues = {
 
 const ShippingScreen = () => {
     const router = useRouter();
-    const {state, dispatch } = useContext(StoreContext);
-    const { cart } = state;
+    const {state: estado, dispatch } = useContext(StoreContext);
+    const { cart } = estado;
     const { shippingAddress } = cart;
 
-    const { handleSubmit, register, formState: {errors}, setValue} = useForm<FormValues>();
+    const { handleSubmit, register, formState: {errors}, setValue} = useForm<ValoresFormulario>();
 
 
     useEffect(()=> {
@@ -30,7 +30,7 @@ const ShippingScreen = () => {
         setValue('country',shippingAddress.country);
     },[setValue, shippingAddress]);
 
-    const submitHandler = async ({fullName, address, city, cep, country}:FormValues ) => {
+    const salvarEndereco = async ({fullName, address, city, cep, country}:ValoresFormulario ) => {
         dispatch({
             type: 'SAVE_SHIPPING_ADDRESS',
             payload: { fullName, address, city, cep, country },
@@ -53,7 +53,7 @@ const ShippingScreen = () => {
   return (
     <>
       <CheckoutWizard activeStep={1}/>
-      <form className='mx-auto max-w-3xl' onSubmit={handleSubmit(submitHandler)}>
+      <form className='mx-auto max-w-3xl' onSubmit={handleSubmit(salvarEndereco)}>
         <div className='rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 md:p-8'>
           <p className='text-xs font-semibold uppercase tracking-wider text-amber-600'>Etapa 2 de 4</p>
           <h1 className='mt-1 text-2xl font-bold text-slate-900 dark:text-slate-100'>Endereco de entrega</h1>

@@ -10,22 +10,22 @@ import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const PlaceorderScreen = () => {
-    const { state, dispatch } = useContext(StoreContext)
-    const { cart } = state
+    const { state: estado, dispatch } = useContext(StoreContext)
+    const { cart } = estado
     const { cartItems, shippingAddress, paymentMethod } = cart
-    const round2 = (num: any) => Math.round(num * 100 + Number.EPSILON) / 100
+    const arredondar2Casas = (numero: any) => Math.round(numero * 100 + Number.EPSILON) / 100
     const router = useRouter()
 
-    const itemsPrice = round2(cartItems.reduce((a: any, c: any) => a + c.quantity * c.price, 0))
-    const shippingPrice = itemsPrice > 200 ? 0 : 15
-    const taxPrice = round2(itemsPrice * 0.15)
-    const totalPrice = round2(itemsPrice + shippingPrice + taxPrice)
+    const precoItens = arredondar2Casas(cartItems.reduce((acumulador: any, item: any) => acumulador + item.quantity * item.price, 0))
+    const precoFrete = precoItens > 200 ? 0 : 15
+    const precoImpostos = arredondar2Casas(precoItens * 0.15)
+    const precoTotal = arredondar2Casas(precoItens + precoFrete + precoImpostos)
 
-    const formatBRL = (value: number) =>
+    const formatarBRL = (valor: number) =>
       new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-      }).format(value)
+      }).format(valor)
 
     useEffect(() => {
         if (!paymentMethod) {
@@ -33,21 +33,21 @@ const PlaceorderScreen = () => {
         }
     }, [paymentMethod, router])
 
-    const [loading, setLoading] = useState(false)
+    const [carregando, setCarregando] = useState(false)
 
-    const placeOrderHandler = async () => {
+    const confirmarPedido = async () => {
         try {
-            setLoading(true)
+            setCarregando(true)
             const { data } = await axios.post('/api/orders', {
                 orderItems: cartItems,
                 shippingAddress,
                 paymentMethod,
-                itemsPrice,
-                shippingPrice,
-                taxPrice,
-                totalPrice,
+                itemsPrice: precoItens,
+                shippingPrice: precoFrete,
+                taxPrice: precoImpostos,
+                totalPrice: precoTotal,
             })
-            setLoading(false)
+            setCarregando(false)
             dispatch({ type: 'CART_CLEAR_ITEMS' })
             Cookies.set(
                 'cart',
@@ -58,7 +58,7 @@ const PlaceorderScreen = () => {
             )
             router.push(`/order/${data._id}`)
         } catch (err) {
-            setLoading(false)
+            setCarregando(false)
             toast.error(getError(err))
         }
     }
@@ -143,13 +143,13 @@ const PlaceorderScreen = () => {
                                 {item.name}
                               </Link>
                               <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                                Unitario: {formatBRL(item.price)}
+                                Unitario: {formatarBRL(item.price)}
                               </p>
                             </div>
                           </div>
                           <p className="text-sm text-slate-700 dark:text-slate-200 md:text-right">Qtd: {item.quantity}</p>
                           <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 md:text-right">
-                            {formatBRL(item.quantity * item.price)}
+                            {formatarBRL(item.quantity * item.price)}
                           </p>
                         </div>
                       </li>
@@ -164,28 +164,28 @@ const PlaceorderScreen = () => {
                   <div className="mt-5 space-y-3 text-sm">
                     <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
                       <span>Itens</span>
-                      <span>{formatBRL(itemsPrice)}</span>
+                      <span>{formatarBRL(precoItens)}</span>
                     </div>
                     <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
                       <span>Frete</span>
-                      <span>{shippingPrice === 0 ? 'Gratis' : formatBRL(shippingPrice)}</span>
+                      <span>{precoFrete === 0 ? 'Gratis' : formatarBRL(precoFrete)}</span>
                     </div>
                     <div className="flex items-center justify-between border-b border-slate-200 pb-3 text-slate-600 dark:border-slate-700 dark:text-slate-300">
                       <span>Impostos</span>
-                      <span>{formatBRL(taxPrice)}</span>
+                      <span>{formatarBRL(precoImpostos)}</span>
                     </div>
                     <div className="flex items-center justify-between text-base font-bold text-slate-900 dark:text-slate-100">
                       <span>Total</span>
-                      <span>{formatBRL(totalPrice)}</span>
+                      <span>{formatarBRL(precoTotal)}</span>
                     </div>
                   </div>
 
                   <button
-                    disabled={loading}
-                    onClick={placeOrderHandler}
+                    disabled={carregando}
+                    onClick={confirmarPedido}
                     className="mt-6 w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:bg-amber-500 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-amber-400"
                   >
-                    {loading ? 'Finalizando...' : 'Confirmar pedido'}
+                    {carregando ? 'Finalizando...' : 'Confirmar pedido'}
                   </button>
                 </div>
               </aside>

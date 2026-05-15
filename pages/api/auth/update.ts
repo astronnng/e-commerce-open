@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 let bcrypt = require('bcryptjs');
 
-interface RequestWithBody extends NextApiRequest {
+interface RequisicaoComBody extends NextApiRequest {
   body: {
     name: string;
     email: string;
@@ -14,7 +14,7 @@ interface RequestWithBody extends NextApiRequest {
 }
 
 async function handler(
-  req: RequestWithBody,
+  req: RequisicaoComBody,
   res: NextApiResponse
 ) {
   if (req.method !== "PUT") {
@@ -25,7 +25,7 @@ async function handler(
   if (!session) {
     return res.status(401).send({ message: "login obrigatorio" });
   }
-  const { user }:any = session;
+  const { user: usuarioSessao }:any = session;
   const { name, email, password } = req.body;
 
   if (
@@ -41,13 +41,13 @@ async function handler(
   }
 
   await db.connect();
-  const toUpdateUser = await User.findById(user._id);
-  toUpdateUser.name = name;
-  toUpdateUser.email = email;
+  const usuarioParaAtualizar = await User.findById(usuarioSessao._id);
+  usuarioParaAtualizar.name = name;
+  usuarioParaAtualizar.email = email;
   if (password) {
-    toUpdateUser.password = await bcrypt.hash(password, 10);
+    usuarioParaAtualizar.password = await bcrypt.hash(password, 10);
   }
-  await toUpdateUser.save();
+  await usuarioParaAtualizar.save();
   await db.disconnect();
   res.send({
     message: 'Usuario atualizado com sucesso'

@@ -10,29 +10,29 @@ import { toast } from 'react-toastify';
 
 const CartScreen = () => {
   const router = useRouter();
-  const { state, dispatch } = useContext(StoreContext);
+  const { state: estado, dispatch } = useContext(StoreContext);
   const {
     cart: { cartItems },
-  } = state;
+  } = estado;
 
-  const removeItemHandler = (item: any) => {
+  const removerItem = (item: any) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
     toast.info('Item removido do carrinho');
   };
 
-  const updateCartHandler = async (item: any, qty: any) => {
-    const quantity = Number(qty);
+  const atualizarCarrinho = async (item: any, quantidadeInformada: any) => {
+    const quantidade = Number(quantidadeInformada);
     const { data } = await axios.get(`/api/products/${item._id}`);
-    if (data.countInStock < quantity) {
+    if (data.countInStock < quantidade) {
       return toast.error('Desculpe. Produto fora de estoque');
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity: quantidade } });
     toast.success('Carrinho atualizado');
   };
 
-  const itemsCount = cartItems.reduce((a: any, c: any) => a + c.quantity, 0);
-  const subtotal = cartItems.reduce((a: any, c: any) => a + c.quantity * c.price, 0);
-  const subtotalFormatted = new Intl.NumberFormat('pt-BR', {
+  const totalItens = cartItems.reduce((acumulador: any, item: any) => acumulador + item.quantity, 0);
+  const subtotal = cartItems.reduce((acumulador: any, item: any) => acumulador + item.quantity * item.price, 0);
+  const subtotalFormatado = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   }).format(subtotal);
@@ -108,7 +108,7 @@ const CartScreen = () => {
                         </label>
                         <select
                           value={item.quantity}
-                          onChange={(e) => updateCartHandler(item, e.target.value)}
+                          onChange={(e) => atualizarCarrinho(item, e.target.value)}
                           className="w-24 border-slate-300 bg-white text-sm dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100"
                         >
                           {[...Array(item.countInStock).keys()].map((x) => (
@@ -133,7 +133,7 @@ const CartScreen = () => {
 
                       <div className="md:text-right">
                         <button
-                          onClick={() => removeItemHandler(item)}
+                          onClick={() => removerItem(item)}
                           className="inline-flex rounded-full border border-slate-300 p-2 text-slate-500 transition hover:border-red-300 hover:text-red-500 dark:border-slate-600 dark:text-slate-300 dark:hover:border-red-400 dark:hover:text-red-400"
                           aria-label={`Remover ${item.name}`}
                         >
@@ -153,15 +153,15 @@ const CartScreen = () => {
               <div className="mt-5 space-y-3 text-sm">
                 <div className="flex items-center justify-between text-slate-600 dark:text-slate-300">
                   <span>Itens</span>
-                  <span>{itemsCount}</span>
+                  <span>{totalItens}</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-slate-200 pb-3 text-slate-600 dark:border-slate-700 dark:text-slate-300">
                   <span>Subtotal</span>
-                  <span>{subtotalFormatted}</span>
+                  <span>{subtotalFormatado}</span>
                 </div>
                 <div className="flex items-center justify-between text-base font-bold text-slate-900 dark:text-slate-100">
                   <span>Total</span>
-                  <span>{subtotalFormatted}</span>
+                  <span>{subtotalFormatado}</span>
                 </div>
               </div>
 
